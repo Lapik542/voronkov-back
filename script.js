@@ -17,29 +17,31 @@ app.get('/', (req, res) => {
 });
 
 app.post('/submit-form', async (req, res) => {
-  const { email, price } = req.body;
+  const { email, plan, price } = req.body;
 
-  if (!email || !price) {
-    return res.status(400).json({ success: false, message: 'Email and price are required.' });
-  }
+  if (!email || !plan || !price) {
+    return res.status(400).json({ success: false, message: 'Email, plan, and price are required.' });
+  }  
 
   if (!validator.isEmail(email)) {
     return res.status(400).json({ success: false, message: 'Please enter a valid email.' });
   }
 
-  const text = `Нова заявка:\nEmail: ${email}\nВибраний план: $${price}`;
+  let messageText = `Нова заявка:\n📧 Email: ${email}\n📦 План: ${plan}\n💰 Ціна: ${price}`;
 
   try {
     const response = await axios.post(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
       chat_id: CHAT_ID,
-      text: text,
+      text: messageText,
     });
+
     res.status(200).json({ success: true, message: 'Form submitted successfully!' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: 'Failed to send message to Telegram.' });
   }
 });
+
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
