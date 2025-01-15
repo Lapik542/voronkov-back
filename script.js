@@ -17,9 +17,9 @@ app.get('/', (req, res) => {
 });
 
 app.post('/submit-form', async (req, res) => {
-  const { email, plan, price } = req.body;
+  const { email, pack } = req.body;
 
-  if (!email || !plan || !price) {
+  if (!email || !pack) {
     return res.status(400).json({ success: false, message: 'Email, plan, and price are required.' });
   }  
 
@@ -27,7 +27,7 @@ app.post('/submit-form', async (req, res) => {
     return res.status(400).json({ success: false, message: 'Please enter a valid email.' });
   }
 
-  let messageText = `Нова заявка:\n📧 Email: ${email}\n📦 План: ${plan}\n💰 Ціна: ${price}`;
+  let messageText = `Нова заявка:\n📧 Email: ${email}\n📦 План: ${pack}`;
 
   try {
     const response = await axios.post(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
