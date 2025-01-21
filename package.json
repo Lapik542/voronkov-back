@@ -10,11 +10,11 @@
   "name": "voronkov-back",
   "version": "1.0.0",
   "main": "script.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    
-    "start": "node script.js"
-  },
+"scripts": {
+  "test": "echo \"Error: no test specified\" && exit 1",
+  "build": "echo 'No build step required for Node.js server'",
+  "start": "node script.js"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
